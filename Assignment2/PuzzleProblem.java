@@ -6,12 +6,12 @@ public class PuzzleProblem {
         int[] initialstate = { 2, 8, 3, 1, 6, 4, 7, 0, 5 };
         int[] goalstate = { 1, 2, 3, 8, 0, 4, 7, 6, 5 };
         System.out.println("\nInitial State is:");
-        for (int i = 0; i < initialstate.length; i++) {
-            System.out.print(initialstate[i] + " ");
+        for (int i :initialstate) {
+            System.out.print(i + " ");
         }
         System.out.println("\nGoal State is");
-        for (int i = 0; i < initialstate.length; i++) {
-            System.out.print(goalstate[i] + " ");
+        for (int i : goalstate) {
+            System.out.print(i + " ");
         }
         heuristicFunction1(initialstate, goalstate);
         heuristicFunction2(initialstate, goalstate);
@@ -86,8 +86,8 @@ public class PuzzleProblem {
             heuristicvalues1[i] = count;
         }
         System.out.println("\nHeuristic Function 1(no of misplaced tiles) values are:");
-        for (int i = 0; i < heuristicvalues1.length; i++) {
-            System.out.print(heuristicvalues1[i] + " ");
+        for (int i : heuristicvalues1) {
+            System.out.print(i + " ");
         }
         System.out.println("\n********************************************");
 
@@ -111,8 +111,8 @@ public class PuzzleProblem {
             heuristicvalues2[i] = count;
         }
         System.out.println("\nHeuristic Function 2 (Manhattan Distance)values are:");
-        for (int i = 0; i < heuristicvalues2.length; i++) {
-            System.out.print(heuristicvalues2[i] + " ");
+        for (int i :heuristicvalues2) {
+            System.out.print(i + " ");
         }
         System.out.println("\n********************************************");
     }
@@ -125,23 +125,23 @@ public class PuzzleProblem {
         double heuristicvalues3[] = new double[moves];
 
         for (int i = 0; i < moves; i++) {
-            double count = 0;
+            double ans = 0;
+            double sum = 0;
+            int x = 0;
             System.out.println("Move " + (i + 1));
             for (int j = 0; j < 9; j++) {
                 System.out.print(movestate[i][j] + " ");
-               double x = Math.abs(goalstate[j] - movestate[i][j]);
-               x = Math.pow(x, 2);
-               double y = Math.abs(goalstate[j] - movestate[i][j]);
-               y = Math.pow(y, 2);
-               count += Math.sqrt(x+y);
+               x = goalstate[j] - movestate[i][j];
+               sum += Math.pow(x, 2);
             }
-            heuristicvalues3[i] = count;
+            ans = Math.sqrt(sum);
+            heuristicvalues3[i] = ans;
             System.out.println();
             
         }
         System.out.println("\nHeuristic Function 3(Euclidean Distance) values are:");
-        for (int i = 0; i < heuristicvalues3.length; i++) {
-            System.out.print(heuristicvalues3[i] + " ");
+        for (double i : heuristicvalues3) {
+            System.out.print(i + " ");
         }
         System.out.println("\n********************************************");
     }
@@ -166,8 +166,8 @@ public class PuzzleProblem {
             System.out.println();
         }
         System.out.println("\nHeuristic Function 4(Jaccard Distance) values are:");
-        for (int i = 0; i < heuristicvalues4.length; i++) {
-            System.out.print(heuristicvalues4[i] + " ");
+        for (double i : heuristicvalues4) {
+            System.out.print(i + " ");
         }
         System.out.println("\n********************************************");
     }
