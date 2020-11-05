@@ -32,7 +32,7 @@ public class tictactoe
 
 	void getIndex(int[]board)
 	{
-		int [] power = {6561,2187,729,243,81,27,9,3,0};
+		int [] power = {6561,2187,729,243,81,27,9,3,1};//powers of 3 stored in a vector
 		int k=0;
 		int index=0;
 		for(int i:board)
