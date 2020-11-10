@@ -1,9 +1,8 @@
 import java.util.*;
+
 public class practice {
-    // Java program to demonstrate 
-// getOrDefault(Object key, V defaultValue) method 
-
-
+    // Java program to demonstrate
+    // getOrDefault(Object key, V defaultValue) method
 
     // Main method
     public static void main(String[] args) {
@@ -19,7 +18,7 @@ public class practice {
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
-        
+
         // print map details
         System.out.println("HashMap: " + s);
 
