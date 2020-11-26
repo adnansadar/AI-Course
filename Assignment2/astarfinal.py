@@ -1,7 +1,6 @@
 from collections import OrderedDict
 import numpy as np
 
-c = []
 openlist = {}
 closedlist = {}
 initialstate = []
@@ -47,25 +46,26 @@ def heuristicfunction(totalmoves, c, father):
         # store copy of totalmoves in temparr
         temparr = totalmoves[i][:].copy()
         # join using comma as a seperator
-        temp = (",".join(str(ele) for ele in temparr))
+        temp = (",".join(str(element) for element in temparr))
         # store heuristic value and father matrix of that move in openlist
         openlist[temp] = [heuristicvalue, father]
     initializelinkedlist(openlist)
 
 
 def initializelinkedlist(openlist):
-    print("\nOPENLIST:\n", openlist)
-    # heuristic value is the key
+    print("\nOPENLIST(Current State : [Heuristic Value, Father]):\n", openlist)
+    # sorting based on heuristic value(key)
     temparr = sorted(openlist.items(), key=lambda k: k[1][0])
     var = temparr[0][0]
-    # added to the openlist in sorted order
+    # maintains the order of the openlist
     openlist = OrderedDict(sorted(openlist.items(), key=lambda k: k[1][0]))
     closedlist[var] = openlist[var]
-    print("CLOSEDLIST:\n", closedlist)
+    print(
+        "CLOSEDLIST(Current State : [Heuristic Value, Father]):\n", closedlist)
     print("\n********************************************************************************")
     # the first element in the openlist has the least heuristic value
     minimumheuristic = openlist[var][0]
-    arr = list(map(float, var.split(",")))
+    arr = list(map(int, var.split(",")))
     # remove the element with least heuristic value from openlist
     del(openlist[var])
     if(minimumheuristic != 0):  # check if its not the goal state
@@ -116,17 +116,17 @@ def bestpath(closedlist):
     print("Best Path Chosen by the Algorithm:")
     cost = 0
     for i in closedlist:
-        current = list(map(float, i.split(",")))
+        current = list(map(int, i.split(",")))
         current = np.array(current)
         if(closedlist[i][1] != None):  # check if father is none
             fathernode = np.array(closedlist[i][1]).reshape(3, 3)  # store
         else:
             fathernode = None
         cost += 1
-        print("Current Path Cost:", cost)
+        print("Path Cost: 1")
         print("Heuristic value:", closedlist[i][0])
         print(current.reshape(3, 3), "\nFather:-\n", fathernode, "\n")
-    print("Goal state reached!")
+    print("Goal state reached!(Heuristic Value is 0)")
     print("Total cost of reaching goal state:", cost)
 
 
