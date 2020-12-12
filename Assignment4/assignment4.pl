@@ -1,86 +1,93 @@
-domains
-    name,address = symbol
-    phone = string
-    l = integer*
-    
-predicates
-    start
-    repeat
-    selectItem(integer)
-    studentData
-    subjectL(l)
-    searchByName(name)
-    searchByPhone(phone)
-database
-    studentDB(name,address,phone,l)
-goal
-    clearwindow,
-    makewindow(1,7,7,"Search Student Detail",0,0,25,80),
-    start.
-clauses
-    repeat.
-        repeat:-
-            repeat.
-    start:-
-        repeat,
-        write("\n0.Exit"),
-        write("\n1.Enter student data"),
-        write("\n2.Search by Name"),
-        write("\n3.Search by Phone number"),
-        write("\n4.Show all Student Data"),
-        write("\nEnter your choice::"),
-        readint(Choice),
-        selectItem(Choice),
-        Choice=0.
-    selectItem(0).
-    selectItem(1):-
-        studentData,
-        fail.
-    selectItem(2):-
-        write("\nEnter your name::"),
-        readln(Name),
-        searchByName(Name),
-        fail.
-    selectItem(3):-
-        write("\nEnter the phone no::"),
-        readln(Phone),
-        searchByPhone(Phone),
-        fail.
-    selectItem(4):-
-        studentDB(Name,Address,Phone,Marks),
-        write(Name,"  ",Address,"  ",Phone,"  ",Marks),nl,
-        fail.
-    studentData:-
-        write("\nEnter the name of the student::"),
-        readln(Name),
-        write("\nEnter the address of the student::"),
-        readln(Address),
-        write("\nEnter the phone number of the student::"),
-        readln(Phone),
-        write("\nEnter the five subject marks of the student"),
-        subjectL(Marks),
-        assert(studentDB(Name,Address,Phone,Marks)).
-    subjectL(Marks):-
-        write("\nC ::"),
-        readint(C),
-        write("\nC++ ::"),
-        readint(CC),
-        write("\nVB ::"),
-        readint(VB),
-        write("\nJAVA ::"),
-        readint(Java),
-        write("\nPROLOG ::"),
-        readint(Prolog),
-        Marks=[C,CC,VB,Java,Prolog].
-    searchByName(Name1):-
-        studentDB(Name1,Address,Phone,Marks),
-        write("\nName::",Name1),
-        write("\nAddress::",Address),
-        write("\nPhone::",Phone),
-        write("\nMarks[C,C++,VB,Java,Prolog]::",Marks).
-    searchByPhone(Phone1):-
-        studentDB(Name,Address,Phone1,Marks),
-        write("\nName::",Name),
-        write("\nAddress::",Address),
-        write("\nPhone::",Phone1),
-        write("\nMarks[C,C++,VB,Java,Prolog]::",Marks).
+#Family Tree
+/*                          John     Mary
+                              |______|
+                      Bob    Sue    Bill     Jane 
+                       |______|       |________|
+                        |____|             |
+                     Nancy  Jeff          Ron                             
+
+*/
+
+#FACTS
+male(john).
+male(bob).
+male(bill).
+male(ron).
+male(jeff).
+
+female(mary).
+female(sue).
+female(nancy).
+female(jane).
+
+mother(mary, sue). 
+mother(mary, bill).
+mother(sue, nancy).
+mother(sue, jeff).
+mother(jane, ron).
+
+father(john, sue).
+father(john, bill).
+father(bob, nancy).
+father(bob, jeff).
+father(bill, ron).
+
+sibling(bob,bill).
+sibling(sue,bill).
+sibling(nancy,jeff).
+sibling(nancy,ron).
+sibling(jell,ron).
+
+
+#RULES
+aunt(X,Y) :-
+  parent(Z,Y), sister(X,Z). 
+
+uncle(X,Y) :-
+  parent(Z,Y), brother(X,Z). 
+
+sibling(X, Y) :-
+      parent(Z, X),
+      parent(Z, Y),
+      X \= Y. 
+
+sister(X, Y) :-
+      sibling(X, Y),
+      female(X).
+
+brother(X, Y) :-
+      sibling(X, Y),
+      male(X).
+
+parent(Z,Y) :- father(Z,Y).
+parent(Z,Y) :- mother(Z,Y).
+
+cousinsister(X,Y) :-
+      female(X),
+      parent(Z,X),
+      parent(W,Y),
+      sibling(W,Z).
+
+cousinbrother(X,Y) :-
+      male(X),
+      parent(Z,X),
+      parent(W,Y),
+      sibling(W,Z).
+
+husband(X,Y):-
+      male(X),
+      parent(X,Z),
+      parent(Y,Z).
+
+wife(X,Y):-
+      female(X),
+      parent(X,Z),
+      parent(Y,Z).
+
+
+grandfather(C,D) :- parent(C,E), parent(E,D).
+grandmother(C,D) :- parent(C,E), parent(E,D).
+
+
+
+
