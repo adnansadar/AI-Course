@@ -22,35 +22,35 @@ public class perceptron {
         int len = w.length;
         float n = 0.0f;
         float[] wnext = Arrays.copyOf(w, len);
-        System.out.println(Arrays.toString(wnext));
+        System.out.println("w: " + Arrays.toString(wnext));
         while (flag != 1) {
             for (int i = 0; i < 3; i++) {
                 if (i == 0) {
                     n = net(x1, wnext);
-                    o[0] = sgn(n);
-                    wnext = wcal(wnext, c, d[0], o[0], x1);
+                    o[0] = sgnfunc(n);
+                    wnext = weightcal(wnext, c, d[0], o[0], x1);
                 }
                 if (i == 1) {
                     n = net(x2, wnext);
-                    o[1] = sgn(n);
-                    wnext = wcal(wnext, c, d[1], o[1], x2);
+                    o[1] = sgnfunc(n);
+                    wnext = weightcal(wnext, c, d[1], o[1], x2);
                 }
                 if (i == 2) {
                     n = net(x3, wnext);
-                    o[2] = sgn(n);
-                    wnext = wcal(wnext, c, d[2], o[2], x3);
+                    o[2] = sgnfunc(n);
+                    wnext = weightcal(wnext, c, d[2], o[2], x3);
                 }
             }
             count += 1;
             System.out.println("Actual Output: " + Arrays.toString(o));
-            flag = comp(d, o);
-            System.out.println("Flag: " + comp(d, o));
+            flag = computation(d, o);
+            // System.out.println("Flag: " + computation(d, o));
             System.out.println("epoch: " + count);
             System.out.println("***********************************************************************************");
         }
     }
 
-    private static int comp(int[] d, int[] o) {
+    private static int computation(int[] d, int[] o) {
         for (int i = 0; i < 3; i++) {
             if (d[i] != o[i])
                 return 0;
@@ -58,7 +58,7 @@ public class perceptron {
         return 1;
     }
 
-    private static float[] wcal(float[] wnext, int c, int i, int j, float[] x1) {
+    private static float[] weightcal(float[] wnext, int c, int i, int j, float[] x1) {
         if (i == j) {
             System.out.println("w: " + Arrays.toString(wnext));
             return wnext;
@@ -72,13 +72,13 @@ public class perceptron {
         return w;
     }
 
-    private static int sgn(float n) {
+    private static int sgnfunc(float n) {
         int o = 0;
         if (n > 0.0f)
             o = 1;
         if (n < 0.0f)
             o = -1;
-        System.out.println("sgn(net): " + o);
+        System.out.println("sgnfunc(net): " + o);
         return o;
     }
 
